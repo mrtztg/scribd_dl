@@ -6,11 +6,11 @@ class ArgsParser:
 
     def __init__(self):
         arg_parser = argparse.ArgumentParser(description="Download audiobooks from scribd.")
-        arg_parser.add_argument('--username', '-u', type=str, help='Account email/username')
-        arg_parser.add_argument('--password', '-p', type=str, help='Account password')
-        arg_parser.add_argument('--input', '-i', type=str, help='Specify the file that contains'
-                                                                ' book/audiobooks url list',)
-        arg_parser.add_argument('--verbose', '-v', help='Increase output verbosity',
+        arg_parser.add_argument('-u', '--username', type=str, help='Account email/username')
+        arg_parser.add_argument('-p', '--password', type=str, help='Account password')
+        arg_parser.add_argument('-i', '--input', type=str, help='Specify the file that contains'
+                                                                ' book/audiobooks url list', )
+        arg_parser.add_argument('-v', '--verbose', help='Increase output verbosity',
                                 action='store_true')
 
         args = arg_parser.parse_args()

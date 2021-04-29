@@ -2,6 +2,7 @@ A cross-platform python based utility to download audiobooks from scribd for per
 ___
 
 ### Requirements
+* **_A premium Scribd account_**
 * Python 3.6
 * Python module argparse
 * Python module selenium
@@ -21,6 +22,24 @@ ___
     ```shell
     python3 scribd_dl.py -u my_email -p my_password -i my_links_file.txt
     ```
+  
+### Advanced usage:
+```shell
+usage: scribd_dl.py [-h] [-u USERNAME] [-p PASSWORD] [-i INPUT] [-v]
+
+Download audiobooks from scribd.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -u USERNAME, --username USERNAME
+                        Account email/username
+  -p PASSWORD, --password PASSWORD
+                        Account password
+  -i INPUT, --input INPUT
+                        Specify the file that contains book/audiobooks url list
+  -v, --verbose         Increase output verbosity
+
+```
 
 #### Disclaimer
 Downloading books from Scribd for free maybe prohibited. This tool is meant for educational purposes only. Please support the authors by buying their titles.
