@@ -3,6 +3,7 @@
 chromedriver
 urls.txt
 downloaded/*
+.idea
 
 
 ### Python template
