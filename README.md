@@ -24,7 +24,7 @@ ___
     ```
   
 ### Advanced usage:
-```shell
+```
 usage: scribd_dl.py [-h] [-u USERNAME] [-p PASSWORD] [-i INPUT] [-v]
 
 Download audiobooks from scribd.
