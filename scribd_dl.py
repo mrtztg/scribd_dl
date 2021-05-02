@@ -19,6 +19,7 @@ def print_if_verbose(val):
         print(val)
 
 
+WAITING_TIMEOUT = 120
 chrome_options = Options()
 driver_user_agent = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                      '(KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36')
@@ -34,12 +35,12 @@ except JSONDecodeError:
 try:
     print_if_verbose('opening website...')
     driver.get("https://scribd.com")
-    login_btn_el = WebDriverWait(driver, 60).until(
+    login_btn_el = WebDriverWait(driver, WAITING_TIMEOUT).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, 'a.header_login_btn'))
     )
     print_if_verbose('logging in...')
     login_btn_el.click()
-    login_email_btn_el = WebDriverWait(driver, 60).until(
+    login_email_btn_el = WebDriverWait(driver, WAITING_TIMEOUT).until(
         EC.element_to_be_clickable(
             (By.CSS_SELECTOR, '.make_scribd_feel_alive a[data-e2e=email-button]'))
     )
@@ -61,14 +62,14 @@ try:
     for book_url in books_url_list:
         print_if_verbose(f'Opening {book_url}')
         driver.get(book_url)
-        listen_btn_el = WebDriverWait(driver, 120).until(
+        listen_btn_el = WebDriverWait(driver, WAITING_TIMEOUT).until(
             EC.presence_of_element_located(
                 (By.CSS_SELECTOR, 'div[data-e2e=primary-actions]>a[data-e2e=listen-button]'))
         )
         listen_btn_link = listen_btn_el.get_attribute('href')
         book_name = driver.find_element_by_css_selector('h1[data-e2e=desktop-content-title]').text
         driver.get(listen_btn_link)
-        chapters_menu_el = WebDriverWait(driver, 60).until(
+        chapters_menu_el = WebDriverWait(driver, WAITING_TIMEOUT).until(
             EC.element_to_be_clickable(
                 (By.CSS_SELECTOR, '.header .menu_icon_container a.menu_icon'))
         )
@@ -99,8 +100,8 @@ try:
 
             start_time = time()
             added_audio = False
-            while time() - start_time < 120 and not added_audio:
-                audio_file_el = WebDriverWait(driver, 60).until(
+            while time() - start_time < 160 and not added_audio:
+                audio_file_el = WebDriverWait(driver, WAITING_TIMEOUT).until(
                     EC.presence_of_element_located((By.CSS_SELECTOR, 'audio#audioplayer'))
                 )
                 audio_file_url = audio_file_el.get_attribute('src')
