@@ -8,7 +8,7 @@ ___
 * Python module selenium
 
 ### Installation:
-* clone with ```git clone https://github.com/mrtztg/scribd_dl.git```
+* clone with ```git clone https://github.com/mrtztg/scribd_dl.git``` or download the release file and extract it.
 * install requirements with ```pip install -r requirements.txt```
 
 ### Usage:
@@ -20,7 +20,7 @@ ___
   ```
 * Download book with script. Sample:
     ```shell
-    python3 scribd_dl.py -u my_email -p my_password -i my_links_file.txt
+    python scribd_dl.py -u "my_email" -p "my_password" -i my_links_file.txt
     ```
   
 ### Advanced usage:
