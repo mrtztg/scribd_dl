@@ -24,7 +24,8 @@ chrome_options = Options()
 driver_user_agent = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                      '(KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36')
 chrome_options.add_argument(f'user-agent={driver_user_agent}')
-chrome_options.add_argument('--headless')
+if not args.display_browser:
+    chrome_options.add_argument('--headless')
 try:
     driver = Chrome(ChromeDriverManager().install(), options=chrome_options)
 except JSONDecodeError:

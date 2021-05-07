@@ -10,6 +10,7 @@ class ArgsParser:
         arg_parser.add_argument('-p', '--password', type=str, help='Account password')
         arg_parser.add_argument('-i', '--input', type=str, help='Specify the file that contains'
                                                                 ' book/audiobooks url list', )
+        arg_parser.add_argument('--display', help='Display browser to user', action='store_true')
         arg_parser.add_argument('-v', '--verbose', help='Increase output verbosity',
                                 action='store_true')
 
@@ -18,6 +19,7 @@ class ArgsParser:
         self.acc_password = args.password
         self.output_verbose = args.verbose
         self.__input_urls_file = args.input
+        self.display_browser = args.display
 
     def get_books_url(self):
         with open(self.__input_urls_file) as input_file:
