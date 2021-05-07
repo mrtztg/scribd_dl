@@ -25,7 +25,7 @@ ___
   
 ### Advanced usage:
 ```
-usage: scribd_dl.py [-h] [-u USERNAME] [-p PASSWORD] [-i INPUT] [-v]
+usage: scribd_dl.py [-h] [-u USERNAME] [-p PASSWORD] [-i INPUT] [--display] [-v]
 
 Download audiobooks from scribd.
 
@@ -37,6 +37,7 @@ optional arguments:
                         Account password
   -i INPUT, --input INPUT
                         Specify the file that contains book/audiobooks url list
+  --display             Display the browser to user
   -v, --verbose         Increase output verbosity
 
 ```
