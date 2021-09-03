@@ -33,6 +33,8 @@ except JSONDecodeError:
         driver = Chrome("./chromedriver", options=chrome_options)
     except Exception:
         driver = Chrome("chromedriver.exe", options=chrome_options)
+
+
 try:
     print_if_verbose('opening website...')
     driver.get("https://scribd.com")
@@ -43,17 +45,38 @@ try:
     login_btn_el.click()
     login_email_btn_el = WebDriverWait(driver, WAITING_TIMEOUT).until(
         EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '.make_scribd_feel_alive a[data-e2e=email-button]'))
+            (By.CSS_SELECTOR, 'a[data-e2e=email-button]'))
     )
     login_email_btn_el.click()
     driver.find_element_by_css_selector('.sign_in .login_or_email.email input').send_keys(
         args.acc_username)
+    sleep(2)
     driver.find_element_by_css_selector('.sign_in .wrapper__password_input input').send_keys(
         args.acc_password)
+    sleep(3)
     driver.find_element_by_css_selector('.sign_in button[type=submit]').click()
     # driver.find_element_by_css_selector('.sign_in button[type=submit]').click()
 
-    sleep(1)
+
+    def logged_in_check():
+        _start_time = time()
+        logged_in = False
+        while True:
+            if 'scribd.com/home' in driver.current_url:
+                logged_in = True
+                break
+            if abs(time() - _start_time) > 60:
+                break
+            sleep(1)
+        if not logged_in:
+            if args.display_browser:
+                print("Solve the reCAPTCHA")
+                logged_in_check()
+            else:
+                print("Run script again with '--display' parameter added. Because reCAPTCHA "
+                      "solving needed")
+                exit(1)
+    logged_in_check()
 
     books_url_list = args.get_books_url()
     if not books_url_list or books_url_list is None:
