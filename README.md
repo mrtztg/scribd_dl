@@ -37,7 +37,7 @@ optional arguments:
                         Account password
   -i INPUT, --input INPUT
                         Specify the file that contains book/audiobooks url list
-  --display             Display the browser to user
+  --headless            Don't display the browser to user
   -v, --verbose         Increase output verbosity
 
 ```

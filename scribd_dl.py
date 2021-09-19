@@ -28,7 +28,8 @@ if not args.display_browser:
     chrome_options.add_argument('--headless')
 try:
     driver = Chrome(ChromeDriverManager().install(), options=chrome_options)
-except JSONDecodeError:
+except Exception as e:
+    print(e)
     try:
         driver = Chrome("./chromedriver", options=chrome_options)
     except Exception:
