@@ -1,5 +1,5 @@
 from time import time, sleep
-
+from selenium import webdriver
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -27,13 +27,14 @@ chrome_options.add_argument(f'user-agent={driver_user_agent}')
 if not args.display_browser:
     chrome_options.add_argument('--headless')
 try:
-    driver = Chrome(ChromeDriverManager().install(), options=chrome_options)
+    #driver = Chrome(ChromeDriverManager().install(), options=chrome_options)
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install(), options=chrome_options))
 except Exception as e:
     print(e)
-    try:
-        driver = Chrome("./chromedriver", options=chrome_options)
+      try:
+        driver = Chrome("./chromedriver", options=chrome_options, port=100)
     except Exception:
-        driver = Chrome("chromedriver.exe", options=chrome_options)
+        driver = Chrome("chromedriver.exe", options=chrome_options, port=100)
 actions = ActionChains(driver)
 
 
@@ -45,7 +46,7 @@ try:
     print_if_verbose('opening website...')
     driver.get("https://scribd.com")
     login_btn_el = WebDriverWait(driver, WAITING_TIMEOUT).until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR, 'a.header_login_btn'))
+        EC.element_to_be_clickable((By.CSS_SELECTOR, '[data-e2e="landing-sign-in-button"]'))
     )
     print_if_verbose('logging in...')
     click_on_el(login_btn_el)
@@ -97,7 +98,7 @@ try:
         driver.get(book_url)
         listen_btn_el = WebDriverWait(driver, WAITING_TIMEOUT).until(
             EC.presence_of_element_located(
-                (By.CSS_SELECTOR, 'div[data-e2e=primary-actions]>a[data-e2e=listen-button]'))
+                (By.CSS_SELECTOR, 'a[data-e2e=listen-button]'))
         )
         listen_btn_link = listen_btn_el.get_attribute('href')
         book_name = driver.find_element(By.CSS_SELECTOR, 'h1[data-e2e=desktop-content-title]').text
