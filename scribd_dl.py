@@ -2,6 +2,7 @@ from time import time, sleep
 from selenium import webdriver
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
@@ -27,14 +28,11 @@ chrome_options.add_argument(f'user-agent={driver_user_agent}')
 if not args.display_browser:
     chrome_options.add_argument('--headless')
 try:
-    #driver = Chrome(ChromeDriverManager().install(), options=chrome_options)
-    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install(), options=chrome_options))
+    driver = Chrome(service=Service("./chromedriver"), options=chrome_options, port=100)
 except Exception as e:
-    print(e)
-      try:
-        driver = Chrome("./chromedriver", options=chrome_options, port=100)
-    except Exception:
-        driver = Chrome("chromedriver.exe", options=chrome_options, port=100)
+    print ("Chrome Driver Exception")
+    print (e)
+    # driver = Chrome("chromedriver.exe", options=chrome_options, port=100)
 actions = ActionChains(driver)
 
 
@@ -50,18 +48,18 @@ try:
     )
     print_if_verbose('logging in...')
     click_on_el(login_btn_el)
-    login_email_btn_el = WebDriverWait(driver, WAITING_TIMEOUT).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, 'a[data-e2e=email-button]'))
-    )
-    click_on_el(login_email_btn_el)
-    driver.find_element(By.CSS_SELECTOR, '.sign_in .login_or_email.email input').send_keys(
+    # login_email_btn_el = WebDriverWait(driver, WAITING_TIMEOUT).until(
+    #     EC.element_to_be_clickable(
+    #         (By.CSS_SELECTOR, 'a[data-e2e=email-button]'))
+    # )
+    # click_on_el(login_email_btn_el)
+    driver.find_element(By.CSS_SELECTOR, 'form .input-wrapper [name="username"]').send_keys(
         args.acc_username)
     sleep(2)
-    driver.find_element(By.CSS_SELECTOR, '.sign_in .wrapper__password_input input').send_keys(
+    driver.find_element(By.CSS_SELECTOR, 'form .input-wrapper [name="password"]').send_keys(
         args.acc_password)
-    sleep(3)
-    click_on_el(driver.find_element(By.CSS_SELECTOR, '.sign_in button[type=submit]'))
+    sleep(5)
+    click_on_el(driver.find_element(By.CSS_SELECTOR, '[data-action-button-primary="true"]'))
 
 
     # driver.find_element_by_css_selector('.sign_in button[type=submit]').click()
